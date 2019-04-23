@@ -1,18 +1,24 @@
-package sample;
+package app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import visual.Hexagon;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("CivSim");
+        StackPane layout = new StackPane();
+
+        layout.getChildren().add(new Hexagon(20, 500, 500).getPolygon());
+
+        primaryStage.setScene(new Scene(layout, 1920, 1080));
         primaryStage.show();
     }
 
