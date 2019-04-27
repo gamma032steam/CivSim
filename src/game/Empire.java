@@ -10,6 +10,7 @@ public class Empire {
     Paint teamColour;
     LandTile capital;
     ArrayList<LandTile> territory = new ArrayList<LandTile>();
+    int population = 1;
 
     public Empire(Paint teamColour, LandTile capital) {
         this.teamColour = teamColour;
@@ -19,7 +20,7 @@ public class Empire {
     }
 
     /** Expands the entire empire out 1 tile (for testing) */
-    public void expandExpotentially() {
+    public void expandExponentially() {
         ArrayList<LandTile> toCapture = new ArrayList<LandTile>();
         for(LandTile tile: territory) {
             for (Tile adjacent : tile.getNeighbours()) {
@@ -36,14 +37,17 @@ public class Empire {
         }
     }
 
+    /** Capture a random adjacent tile (for testing) */
     public void expandLinearly() {
         for(LandTile tile: territory) {
             for (Tile adjacent: tile.getNeighbours()) {
-                LandTile newTile = (LandTile) adjacent;
-                if (newTile.getEmpire() == null) {
-                    newTile.setOccupier(this);
-                    territory.add(newTile);
-                    return;
+                if (adjacent instanceof LandTile) {
+                    LandTile newTile = (LandTile) adjacent;
+                    if (newTile.getEmpire() == null) {
+                        newTile.setOccupier(this);
+                        territory.add(newTile);
+                        return;
+                    }
                 }
             }
         }

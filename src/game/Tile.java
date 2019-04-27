@@ -17,7 +17,6 @@ public abstract class Tile extends RegularHexagon {
         super(sideLength, centerX, centerY);
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        paint(Color.WHITESMOKE);
         super.getPolygon().setStrokeLineJoin(StrokeLineJoin.ROUND);
         super.getPolygon().setStroke(Color.BLACK);
         super.getPolygon().setStrokeWidth(0.5);
