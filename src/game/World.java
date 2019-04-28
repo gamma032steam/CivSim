@@ -27,7 +27,7 @@ public class World {
     }
 
     public void initializeEmpires() {
-        Empire Britain = new Empire(Color.RED, (LandTile)tileGrid[2][8]);
+        Empire Britain = new Empire(Color.RED, (LandTile)tileGrid[72][8]);
         empires.add(Britain);
         /*Empire Australia = new Empire(Color.GREEN, (LandTile)tileGrid[2][64]);
         empires.add(Australia);*/
@@ -68,7 +68,8 @@ public class World {
         // Create the map
         // Init random scale
         Random rand = new Random();
-        double SCALE = 0.01;
+        // OLD 0.01
+        double SCALE = 0.02;
         int offset = rand.nextInt(100000);
         // x-axis (columns)
         //System.out.format("%d %d\n", TILES_X*2+2, TILES_Y+1);
@@ -97,15 +98,20 @@ public class World {
                 // Src: https://www.redblobgames.com/maps/terrain-from-noise/#demo
                 // Noise generator
 
-                double elevation = sumOctave(16, x+offset, y+offset, 0.8, SCALE, 0, 100);
+                double elevation = sumOctave(16, x+offset, y+offset, 0.6, SCALE, 0, 100);
                 //double elevation = (new Random()).nextInt(100);
                 //+  0.5 * noise.eval(x*FEATURE_SIZE*2, y*FEATURE_SIZE*2)
                 //+ 0.25 * noise.eval(x*FEATURE_SIZE*4, y*FEATURE_SIZE*4);
 
-                //System.out.println(elevation);
+                // Central bias
+                elevation -= (Math.abs(y-(TILES_Y/2))/2);
+                elevation -= 25*Math.pow(Math.min(y+1, Math.abs(TILES_Y-y))+1, -1);
+                //System.out.println(50*Math.pow(Math.min(y+1, Math.abs(TILES_Y-y))+1, -1.1));
+                System.out.println(elevation);
                 //System.out.println(elevation);
                 Tile newTile;
-                if ((elevation < 55) && !(doubleYCoordinate ==2 && doubleXCoordinate == 8)) {
+                // < 55
+                if ((elevation < 40) && !(doubleYCoordinate ==72 && doubleXCoordinate == 8)) {
                     newTile = new WaterTile(HEXAGON_SIDE_LENGTH, centerX, centerY, doubleXCoordinate, doubleYCoordinate);
                 } else {
                     newTile = new LandTile(HEXAGON_SIDE_LENGTH, centerX, centerY, doubleXCoordinate, doubleYCoordinate,
